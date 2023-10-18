@@ -17,6 +17,7 @@ export const Main = () => {
     const [lastName, setlastName] = useState('');
     const [email, setEmail] = useState('');
     const [age, setAge] = useState(0);
+    const [id, setId] = useState(0);
     const [className, setClassName] = useState('');
     const [registration, setRegistration] = useState('');
     const [studentsData, setStudentsData] = useState([]);
@@ -70,8 +71,35 @@ export const Main = () => {
 
     }
 
-    function update() {
-        console.log('Atualizei')
+    async function update() {
+        const headers = {
+            'headers': {
+                // Indicar que será enviado os dados em formato de objeto
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const data = {
+            id: id,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            age: age,
+            class: className,
+            registration: registration
+        };
+
+
+        await axios.put('http://localhost:3000/students', data, headers)
+            .then((response) => {
+                console.log(response.data.mensagem);
+            }).catch((err) => { 
+                if (err.response) {
+                    console.log(err.response.data.mensagem);
+                } else {
+                    console.log("AAAAA");
+                }
+            });
     }
 
     function remove() {
@@ -97,14 +125,14 @@ export const Main = () => {
             <Container>
                 <Forms>
                     <DivTwo>
-                        <InputS placeholder="Nome" type="text" onChange={(e) => { setFirstName(e.target.value); console.log(firstName) }} value={firstName} />
-                        <InputS placeholder="Sobrenome" type="text" onChange={(e) => { setlastName(e.target.value) }} value={lastName} />
-                        <InputAge placeholder="Idade" type="number" onChange={(e) => { setAge(e.target.value) }} value={age} />
+                        <InputS required placeholder="Nome" type="text" onChange={(e) => { setFirstName(e.target.value); console.log(firstName) }} value={firstName} />
+                        <InputS required placeholder="Sobrenome" type="text" onChange={(e) => { setlastName(e.target.value) }} value={lastName} />
+                        <InputAge required placeholder="Idade" type="number" onChange={(e) => { setAge(e.target.value) }} value={age} />
                     </DivTwo>
-                    <InputS placeholder="Email" type="email" onChange={(e) => { setEmail(e.target.value) }} value={email} />
+                    <InputS  required placeholder="Email" type="email" onChange={(e) => { setEmail(e.target.value) }} value={email} />
                     <DivTwo>
-                        <InputS placeholder="Turma" type="text" onChange={(e) => { setClassName(e.target.value) }} value={className} />
-                        <InputS placeholder="Matricula" type="text" onChange={(e) => { setRegistration(e.target.value) }} value={registration} />
+                        <InputS required placeholder="Turma" type="text" onChange={(e) => { setClassName(e.target.value) }} value={className} />
+                        <InputS required placeholder="Matricula" type="text" onChange={(e) => { setRegistration(e.target.value) }} value={registration} />
                     </DivTwo>
                 </Forms>
                 <Register>Registros :</Register>
@@ -118,8 +146,9 @@ export const Main = () => {
                                 setEmail(student.email);
                                 setClassName(student.class);
                                 setRegistration(student.registration);
+                                setId(student.id);
 
-                                console.log(firstName)
+                                console.log(student.id)
                             }}>
                                 <Data>
                                     <Infos>Nome:</Infos>
