@@ -2,9 +2,6 @@
 const db = require('./database/models/index')
 const Student = require('./database/models/student')
 
-
-
-
 // Express - Server
 const express = require('express')
 const app = express()
@@ -15,18 +12,20 @@ app.use(cors())
 
 app.use(express.json())
 
+app.listen(port, () => {
+    console.log(`Servidor rodando na porta: ${port}`)
+})
 
-app.get('/students', (req, res) => {
-    const data = db.Student.findAll().then((users) => {
-        res.json(users)
+// Express - Server
+
+app.get('/doctors', (req, res) => {
+    const data = db.Doctor.findAll().then((doctors) => {
+        res.json(doctors)
     }).catch((err) => {
         console.log(err)
     })
 })
 
-app.listen(port, () => {
-    console.log(`Servidor rodando na porta: ${port}`)
-})
 
 app.put("/students", async (req, res) => {
 
@@ -45,8 +44,10 @@ app.put("/students", async (req, res) => {
 });
 
 // Incluir Controllers
-const createUser = require('./controllers/createUsers')
+const createUser = require('./controllers/createUsers');
+const createDoctor = require('./controllers/createDoctors');
 
 // Criar as rotas
-app.use('/createUser', createUser)
+app.use('/createUser', createUser);
+app.use('/createDoctor', createDoctor);
 

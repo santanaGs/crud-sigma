@@ -29,7 +29,7 @@ export const BodyS = styled.div`
     gap: 3rem;
     align-items: center;
     justify-content: center;
-    background-color: #7E0086;
+    background: linear-gradient(293deg, #0B4A50 0%, #44A1A0 96.78%);
 
 `
 
@@ -111,6 +111,7 @@ export const Register = styled.h3`
 
 export const Data = styled.div`
     display: flex;
+    gap: .5rem;
 `
 export const DataD = styled.button`
     width: 95%;

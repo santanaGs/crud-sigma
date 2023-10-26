@@ -16,18 +16,18 @@ export const Main = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setlastName] = useState('');
     const [email, setEmail] = useState('');
-    const [age, setAge] = useState(0);
+    const [crm, setCrm] = useState('');
     const [id, setId] = useState(0);
-    const [className, setClassName] = useState('');
-    const [registration, setRegistration] = useState('');
-    const [studentsData, setStudentsData] = useState([]);
+    const [especialidade, setEspecialidade] = useState('');
+    const [doctorData, setDoctorData] = useState([]);
 
     useUpdateEffect(() => {
         // Faça a solicitação Axios para buscar os dados dos alunos
-        axios.get('http://localhost:3000/students')
+        axios.get('http://localhost:3000/doctors')
             .then((res) => {
+                console.log(res)
                 // Atualize o estado com os dados da API
-                setStudentsData(res.data);
+                setDoctorData(res.data);
             })
             .catch((err) => {
                 console.log(err);
@@ -36,38 +36,40 @@ export const Main = () => {
 
     // Functions
     function add() {
-        const user = {
+        const doctor = {
             firstName: firstName,
             lastName: lastName,
             email: email,
-            age: age,
-            class: className,
-            registration: registration
+            especialidade: especialidade,
+            crm: crm,
         };
 
         // Verifique se todos os campos estão preenchidos
-        if (firstName === '' || lastName === '' || email === '' || age === 0 || className === '' || registration === '') {
+        if (firstName === '' || lastName === '' || email === '' || especialidade === '' || crm === '') {
             console.log('Falta dados');
             return;
         }
 
         // Adicionando um aluno no banco de dados
-        axios.post('http://localhost:3000/createUser', user, headers)
+        axios.post('http://localhost:3000/createDoctor', doctor, headers)
             .then((res) => {
                 console.log('Cadastrado');
+                console.log(res);
                 // Atualize a lista de alunos após o cadastro
-                setStudentsData([...studentsData, user]);
+                setDoctorData([...doctorData, doctor]);
 
             })
             .catch((err) => {
                 console.log(err);
             });
-            setFirstName('');
-            setlastName('');
-            setAge(0);
-            setEmail('');
-            setClassName('');
-            setRegistration('');
+
+
+        setFirstName('');
+        setlastName('');
+        setCrm('');
+        setEmail('');
+        setEspecialidade('');
+
 
     }
 
@@ -84,7 +86,7 @@ export const Main = () => {
             firstName: firstName,
             lastName: lastName,
             email: email,
-            age: age,
+            crm: crm,
             class: className,
             registration: registration
         };
@@ -93,7 +95,7 @@ export const Main = () => {
         await axios.put('http://localhost:3000/students', data, headers)
             .then((response) => {
                 console.log(response.data.mensagem);
-            }).catch((err) => { 
+            }).catch((err) => {
                 if (err.response) {
                     console.log(err.response.data.mensagem);
                 } else {
@@ -121,58 +123,50 @@ export const Main = () => {
     // Rendering
     return (
         <BodyS>
-            <Title>Registro de Alunos</Title>
+            <Title>Cadastro de Médico</Title>
             <Container>
                 <Forms>
                     <DivTwo>
                         <InputS required placeholder="Nome" type="text" onChange={(e) => { setFirstName(e.target.value); console.log(firstName) }} value={firstName} />
                         <InputS required placeholder="Sobrenome" type="text" onChange={(e) => { setlastName(e.target.value) }} value={lastName} />
-                        <InputAge required placeholder="Idade" type="number" onChange={(e) => { setAge(e.target.value) }} value={age} />
+                        <InputAge required placeholder="CRM" type="text" onChange={(e) => { setCrm(e.target.value) }} value={crm} />
                     </DivTwo>
-                    <InputS  required placeholder="Email" type="email" onChange={(e) => { setEmail(e.target.value) }} value={email} />
+                    <InputS required placeholder="Email" type="email" onChange={(e) => { setEmail(e.target.value) }} value={email} />
                     <DivTwo>
-                        <InputS required placeholder="Turma" type="text" onChange={(e) => { setClassName(e.target.value) }} value={className} />
-                        <InputS required placeholder="Matricula" type="text" onChange={(e) => { setRegistration(e.target.value) }} value={registration} />
+                        <InputS required placeholder="Especialidade" type="text" onChange={(e) => { setEspecialidade(e.target.value) }} value={especialidade} />
                     </DivTwo>
                 </Forms>
-                <Register>Registros :</Register>
+                <Register>Médicos :</Register>
                 <Table>
-                    {studentsData.map((student, index) => {
+                    {doctorData.map((doctor, index) => {
                         return (
                             <DataD onClick={() => {
-                                setFirstName(student.firstName);
-                                setlastName(student.lastName);
-                                setAge(student.age);
-                                setEmail(student.email);
-                                setClassName(student.class);
-                                setRegistration(student.registration);
-                                setId(student.id);
-
-                                console.log(student.id)
+                                setFirstName(doctor.firstName);
+                                setlastName(doctor.lastName);
+                                setEmail(doctor.email);
+                                setCrm(doctor.crm);
+                                setEspecialidade(doctor.especialidade)
+                                setId(doctor.id);
                             }}>
                                 <Data>
-                                    <Infos>Nome:</Infos>
-                                    <p>{student.firstName}</p>
+                                    <Infos>Nome: </Infos>
+                                    <p>{doctor.firstName}</p>
                                 </Data>
                                 <Data>
-                                    <Infos>Sobrenome:</Infos>
-                                    <p>{student.lastName}</p>
+                                    <Infos>Sobrenome: </Infos>
+                                    <p>{doctor.lastName}</p>
                                 </Data>
                                 <Data>
-                                    <Infos>Idade:</Infos>
-                                    <p>{student.age}</p>
+                                    <Infos>CRM: </Infos>
+                                    <p>{doctor.crm}</p>
                                 </Data>
                                 <Data>
-                                    <Infos>Email:</Infos>
-                                    <p>{student.email}</p>
+                                    <Infos>E-mail: </Infos>
+                                    <p>{doctor.email}</p>
                                 </Data>
                                 <Data>
-                                    <Infos>Turma:</Infos>
-                                    <p>{student.class}</p>
-                                </Data>
-                                <Data>
-                                    <Infos>Matricula:</Infos>
-                                    <p>{student.registration}</p>
+                                    <Infos>Especialidade:</Infos>
+                                    <p>{doctor.especialidade}</p>
                                 </Data>
                             </DataD>
                         )
