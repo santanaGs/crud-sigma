@@ -13,12 +13,12 @@ export const Title = styled.h1`
 export const Container = styled.div`
     width: 1220px;
     margin: 0 auto;
-    background-color: #F5E6F6;
+    background-color: #E8E7EF;
     border-radius: 1rem;
     height: max-content;
     font-family: 'Fredoka', sans-serif;
     padding: 2rem;
-    box-shadow: 0px 4px 30px #F5E6F6;
+    box-shadow: 0px 4px 30px #0B4A50;
 `
 
 export const BodyS = styled.div`
@@ -47,7 +47,7 @@ export const InputS = styled.input`
     outline: none;
     width: 100%;
     font-size: 1rem;
-    background-color: #F0D9F2;
+    background-color: #a2cabdc0;
     font-family: 'Fredoka', sans-serif;
     font-weight: 500;
 `
@@ -60,7 +60,7 @@ export const InputAge = styled.input`
     outline: none;
     width: 20%;
     font-family: 'Fredoka', sans-serif;
-    background-color: #F0D9F2;
+    background-color: #a2cabdc0;
     font-size: 1rem;
     font-weight: 500;
 `
@@ -73,7 +73,7 @@ export const DivTwo = styled.div`
 export const Table = styled.div`
     height: 27rem;
     margin-top: 1rem;
-    background-color: #F0D9F2;
+    background-color: #a2cabdc0;
     border-radius: 0.5rem;
     display: flex;
     flex-direction: column;
@@ -88,18 +88,19 @@ export const ButtonsS = styled.div`
 
 export const ButtonS = styled.button`
     border: none;
-    background-color: #E1B0E4;
+    background-color: #a2cabdc0;
     padding: 1rem;
     border-radius: .5rem;
-    color: #707070;
+    color: #226250;
     font-family: 'Fredoka', sans-serif;
     font-weight: 500;
     font-size: 1rem;
     transition: .3s;
 
     &:hover{
-        background-color: #9D00A8;
+        background-color: #205E51;
         cursor: pointer;
+        color: #fff;
     }
 `
 
@@ -107,6 +108,8 @@ export const Register = styled.h3`
     margin: 0;
     font-weight: 500;
     margin-top: 1%;
+    color: #226250;
+    font-weight: bold;
 `
 
 export const Data = styled.div`

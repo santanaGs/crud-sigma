@@ -16,7 +16,8 @@ export const Content = styled.div`
     height: 34.375rem;
     flex-shrink: 0;
     border-radius: 1.25rem;
-    background: #FFF;
+    background: rgb(211,208,216);
+background: linear-gradient(54deg, rgba(211,208,216,1) 0%, rgba(248,249,251,1) 60%);
     box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.10);
 
     display: flex;
@@ -61,4 +62,9 @@ export const ButtonS = styled.button`
         background-color: #072e31;
         cursor: pointer;
     }
+`
+
+export const Logo = styled.img`
+    width: 250px;
+    height: auto;
 `

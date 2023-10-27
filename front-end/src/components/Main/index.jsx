@@ -81,31 +81,51 @@ export const Main = () => {
             }
         }
 
-        const data = {
+        const dados = {
             id: id,
             firstName: firstName,
             lastName: lastName,
             email: email,
+            especialidade: especialidade,
             crm: crm,
-            class: className,
-            registration: registration
         };
 
 
-        await axios.put('http://localhost:3000/students', data, headers)
+        await axios.put('http://localhost:3000/doctors', dados, headers)
             .then((response) => {
                 console.log(response.data.mensagem);
+                location.reload()
             }).catch((err) => {
                 if (err.response) {
                     console.log(err.response.data.mensagem);
-                } else {
-                    console.log("AAAAA");
                 }
             });
     }
 
-    function remove() {
-        console.log('Deletei')
+    async function remove() {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            data: {
+                id: id,
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                especialidade: especialidade,
+                crm: crm,
+            },
+        };
+    
+        try {
+            const response = await axios.delete('http://localhost:3000/doctors', config);
+            console.log(response.data.mensagem);
+            location.reload();
+        } catch (err) {
+            if (err.response) {
+                console.log(err.response.data.mensagem);
+            }
+        }
     }
 
     function sendData() {
@@ -147,6 +167,8 @@ export const Main = () => {
                                 setCrm(doctor.crm);
                                 setEspecialidade(doctor.especialidade)
                                 setId(doctor.id);
+
+                                console.log(id);
                             }}>
                                 <Data>
                                     <Infos>Nome: </Infos>

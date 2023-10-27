@@ -10,8 +10,12 @@ import {
     ButtonS, 
     Content, 
     DivS, 
+    Logo, 
     Title 
 } from "./styles";
+
+// Image
+import logo from '../../assets/sigma_logo.png'
 
 // Functional Component
 export const Home = () => {
@@ -23,6 +27,7 @@ export const Home = () => {
     return (
         <Background>
             <Content>
+                <Logo src={logo} alt="" />
                 <Title>O que você vai cadastrar?</Title>
                 <DivS>
                     <ButtonS onClick={() => { navigate('/doctor') }}>Médico</ButtonS>
