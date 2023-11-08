@@ -16,7 +16,7 @@ export const Container = styled.div`
     margin: 0 auto;
     background-color: #E8E7EF;
     border-radius: 1rem;
-    height: max-content;
+    height: 80%;
     font-family: 'Fredoka', sans-serif;
     padding: 2rem;
     box-shadow: 0px 4px 30px #0B4A50;
@@ -50,6 +50,10 @@ export const InputS = styled.input`
     background-color: #a2cabdc0;
     font-family: 'Fredoka', sans-serif;
     font-weight: 500;
+
+    &::placeholder{
+        color: #000;
+    }
 `
 
 export const InputAge = styled.input`
@@ -58,11 +62,15 @@ export const InputAge = styled.input`
     border-radius: .5rem;
     border: none;
     outline: none;
-    width: 20%;
+    width: 50%;
     font-family: 'Fredoka', sans-serif;
     background-color: #a2cabdc0;
     font-size: 1rem;
     font-weight: 500;
+
+    &::placeholder{
+        color: #000;
+    }
 `
 
 export const DivTwo = styled.div`
@@ -71,7 +79,7 @@ export const DivTwo = styled.div`
 `
 
 export const Table = styled.div`
-    height: 27rem;
+    height: 17rem;
     margin-top: 1rem;
     background-color: #a2cabdc0;
     border-radius: 0.5rem;

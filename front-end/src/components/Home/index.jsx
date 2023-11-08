@@ -31,7 +31,7 @@ export const Home = () => {
                 <Title>O que você vai cadastrar?</Title>
                 <DivS>
                     <ButtonS onClick={() => { navigate('/doctor') }}>Médico</ButtonS>
-                    <ButtonS>Paciente</ButtonS>
+                    <ButtonS onClick={() => {navigate('/paciente')}}>Paciente</ButtonS>
                 </DivS>
             </Content>
         </Background>

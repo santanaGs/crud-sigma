@@ -2,13 +2,17 @@
 import React, { useState } from "react";
 
 // Styled Components
-import { BodyS, ButtonS, ButtonsS, Container, Data, DataD, DivTwo, Forms, Infos, InputAge, InputS, Register, Table, Title } from "./style";
+import { BodyS, ButtonS, ButtonsS, Container, Data, DataD, DivSButtonS, DivTwo, Forms, Infos, InputAge, InputS, Register, Table, Title } from "./style";
 
 // Axios
 import axios from 'axios'
 
 // updateEffect
 import { useUpdateEffect } from "../../useUpdate";
+import { ModalS } from "../Modal";
+
+// Navigate
+import {useNavigate} from 'react-router-dom';
 
 // Functional Component
 export const Main = () => {
@@ -20,6 +24,9 @@ export const Main = () => {
     const [id, setId] = useState(0);
     const [especialidade, setEspecialidade] = useState('');
     const [doctorData, setDoctorData] = useState([]);
+
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalText, setModalText] = useState('');
 
     useUpdateEffect(() => {
         // Faça a solicitação Axios para buscar os dados dos alunos
@@ -58,6 +65,8 @@ export const Main = () => {
                 // Atualize a lista de alunos após o cadastro
                 setDoctorData([...doctorData, doctor]);
 
+                setModalVisible(true);
+                setModalText('Médico cadastrado com sucesso!')
             })
             .catch((err) => {
                 console.log(err);
@@ -94,7 +103,9 @@ export const Main = () => {
         await axios.put('http://localhost:3000/doctors', dados, headers)
             .then((response) => {
                 console.log(response.data.mensagem);
-                location.reload()
+
+                setModalVisible(true);
+                setModalText('Médico atualizado com sucesso!')
             }).catch((err) => {
                 if (err.response) {
                     console.log(err.response.data.mensagem);
@@ -116,11 +127,13 @@ export const Main = () => {
                 crm: crm,
             },
         };
-    
+
         try {
             const response = await axios.delete('http://localhost:3000/doctors', config);
             console.log(response.data.mensagem);
-            location.reload();
+
+            setModalVisible(true);
+            setModalText('Médico excluído com sucesso!')
         } catch (err) {
             if (err.response) {
                 console.log(err.response.data.mensagem);
@@ -130,6 +143,13 @@ export const Main = () => {
 
     function sendData() {
         setAge()
+    }
+
+    // Navigate
+    const navigate = useNavigate();
+
+    function goBack(){
+        navigate(-1);
     }
 
     // Header Api
@@ -167,8 +187,7 @@ export const Main = () => {
                                 setCrm(doctor.crm);
                                 setEspecialidade(doctor.especialidade)
                                 setId(doctor.id);
-
-                                console.log(id);
+                                key = { index }
                             }}>
                                 <Data>
                                     <Infos>Nome: </Infos>
@@ -194,11 +213,18 @@ export const Main = () => {
                         )
                     })}
                 </Table>
-                <ButtonsS>
-                    <ButtonS onClick={add}>Adicionar</ButtonS>
-                    <ButtonS onClick={update}>Editar</ButtonS>
-                    <ButtonS onClick={remove}>Excluir</ButtonS>
-                </ButtonsS>
+                <DivSButtonS>
+                    <ButtonsS>
+                        <ButtonS onClick={add}>Adicionar</ButtonS>
+                        <ButtonS onClick={update}>Editar</ButtonS>
+                        <ButtonS onClick={remove}>Excluir</ButtonS>
+                    </ButtonsS>
+                    <ButtonS onClick={goBack}>Voltar</ButtonS>
+                </DivSButtonS>
+                {modalVisible && <ModalS text={modalText} click={() => {
+                    setModalVisible(false)
+                    location.reload();
+                }} />}
             </Container>
         </BodyS>
     )
