@@ -16,13 +16,13 @@ import { useNavigate } from 'react-router-dom';
 
 // Functional Component
 export const Pacientes = () => {
-    // Variables //
-    const [id, setId] = useState(0);
+    // ===== Variables  ===== //
 
     // Dados
     const [firstName, setFirstName] = useState('');
     const [lastName, setlastName] = useState('');
     const [dataNascimento, setDataNascimento] = useState('');
+    const [id, setId] = useState(0);
 
     // Contato
     const [email, setEmail] = useState('');
@@ -44,116 +44,141 @@ export const Pacientes = () => {
     const [modalText, setModalText] = useState('');
 
     useUpdateEffect(() => {
-        // Faça a solicitação Axios para buscar os dados dos alunos
-        // axios.get('http://localhost:3000/doctors')
-        //     .then((res) => {
-        //         console.log(res)
-        //         // Atualize o estado com os dados da API
-        //         setDoctorData(res.data);
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //     });
+        axios.get('http://localhost:3000/patient')
+            .then((res) => {
+                console.log(res)
+                // Atualize o estado com os dados da API
+                setPacienteData(res.data);
+                console.log(pacienteData)
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }, []);
 
     // Functions
     function add() {
-        // const doctor = {
-        //     firstName: firstName,
-        //     lastName: lastName,
-        //     email: email,
-        //     especialidade: especialidade,
-        //     crm: crm,
-        // };
+        const pacient = {
+            firstName: firstName,
+            lastName: lastName,
+            dataNascimento: dataNascimento,
+            email: email,
+            telefone: telefone,
+            logradouro: end,
+            numero: endNum,
+            bairro: bairro,
+            cep: cep,
+            cidade: cidade,
+            estado: estado
+        };
 
-        // // Verifique se todos os campos estão preenchidos
-        // if (firstName === '' || lastName === '' || email === '' || especialidade === '' || crm === '') {
-        //     console.log('Falta dados');
-        //     return;
-        // }
+        // Verifique se todos os campos estão preenchidos
+        if (!firstName|| !lastName|| !dataNascimento || !email || !telefone || !end || !endNum || !bairro || !cep || !cidade || !estado) {
+            setModalText('Falta dados');
+            setModalVisible(true);
+            return;
+        }
 
-        // // Adicionando um aluno no banco de dados
-        // axios.post('http://localhost:3000/createDoctor', doctor, headers)
-        //     .then((res) => {
-        //         console.log('Cadastrado');
-        //         console.log(res);
-        //         // Atualize a lista de alunos após o cadastro
-        //         setDoctorData([...doctorData, doctor]);
+        // Adicionando um paciente no banco de dados
+        axios.post('http://localhost:3000/createPatient', pacient, headers)
+            .then((res) => {
+                console.log('Cadastrado');
+                console.log(res);
+                // Atualize a lista de pacientes após o cadastro
+                setPacienteData([...pacienteData, pacient]);
 
-        //         setModalVisible(true);
-        //         setModalText('Médico cadastrado com sucesso!')
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //     });
+                setModalVisible(true);
+                setModalText('Paciente cadastrado com sucesso!')
+            })
+            .catch((err) => {
+                console.log(err);
+            });
 
 
-        // setFirstName('');
-        // setlastName('');
-        // setCrm('');
-        // setEmail('');
-        // setEspecialidade('');
-
+            setFirstName('');
+            setlastName('');
+            setDataNascimento('');
+            setEmail('');
+            setTelefone('');
+            setEnd('');
+            setEndNum(0);
+            setBairro('');
+            setCep('');
+            setCidade('');
+            setEstado('')
+            setId(0);
 
     }
 
     async function update() {
-        // const headers = {
-        //     'headers': {
-        //         // Indicar que será enviado os dados em formato de objeto
-        //         'Content-Type': 'application/json'
-        //     }
-        // }
+        const headers = {
+            'headers': {
+                // Indicar que será enviado os dados em formato de objeto
+                'Content-Type': 'application/json'
+            }
+        }
 
-        // const dados = {
-        //     id: id,
-        //     firstName: firstName,
-        //     lastName: lastName,
-        //     email: email,
-        //     especialidade: especialidade,
-        //     crm: crm,
-        // };
+        const dados = {
+            id: id,
+            firstName: firstName,
+            lastName: lastName,
+            dataNascimento: dataNascimento,
+            email: email,
+            telefone: telefone,
+            logradouro: end,
+            numero: endNum,
+            bairro: bairro,
+            cep: cep,
+            cidade: cidade,
+            estado: estado
+        };
 
 
-        // await axios.put('http://localhost:3000/doctors', dados, headers)
-        //     .then((response) => {
-        //         console.log(response.data.mensagem);
+        await axios.put('http://localhost:3000/patient', dados, headers)
+            .then((response) => {
+                console.log(response.data.mensagem);
 
-        //         setModalVisible(true);
-        //         setModalText('Médico atualizado com sucesso!')
-        //     }).catch((err) => {
-        //         if (err.response) {
-        //             console.log(err.response.data.mensagem);
-        //         }
-        //     });
+                setModalVisible(true);
+                setModalText('Paciente atualizado com sucesso!')
+            }).catch((err) => {
+                if (err.response) {
+                    console.log(err.response.data.mensagem);
+                }
+            });
     }
 
     async function remove() {
-        // const config = {
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     data: {
-        //         id: id,
-        //         firstName: firstName,
-        //         lastName: lastName,
-        //         email: email,
-        //         especialidade: especialidade,
-        //         crm: crm,
-        //     },
-        // };
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            data: {
+                id: id,
+                firstName: firstName,
+                lastName: lastName,
+                dataNascimento: dataNascimento,
+                email: email,
+                telefone: telefone,
+                logradouro: end,
+                numero: endNum,
+                bairro: bairro,
+                cep: cep,
+                cidade: cidade,
+                estado: estado
+            },
+        };
 
-        // try {
-        //     const response = await axios.delete('http://localhost:3000/doctors', config);
-        //     console.log(response.data.mensagem);
+        try {
+            const response = await axios.delete('http://localhost:3000/patient', config);
+            console.log(response.data.mensagem);
 
-        //     setModalVisible(true);
-        //     setModalText('Médico excluído com sucesso!')
-        // } catch (err) {
-        //     if (err.response) {
-        //         console.log(err.response.data.mensagem);
-        //     }
-        // }
+            setModalVisible(true);
+            setModalText('Paciente excluído com sucesso!')
+        } catch (err) {
+            if (err.response) {
+                console.log(err.response.data.mensagem);
+            }
+        }
     }
 
     // Navigate
@@ -199,40 +224,45 @@ export const Pacientes = () => {
                 </Forms>
                 <Register>Paciente :</Register>
                 <Table>
-                    {/* {doctorData.map((doctor, index) => {
+                    {pacienteData.map((patient, index) => {
                         return (
-                            <DataD onClick={() => {
-                                setFirstName(doctor.firstName);
-                                setlastName(doctor.lastName);
-                                setEmail(doctor.email);
-                                setCrm(doctor.crm);
-                                setEspecialidade(doctor.especialidade)
-                                setId(doctor.id);
-                                key = { index }
+                            <DataD key={index} onClick={() => {
+                                setFirstName(patient.firstName);
+                                setlastName(patient.lastName);
+                                setDataNascimento(patient.dataNascimento);
+                                setEmail(patient.email);
+                                setTelefone(patient.telefone);
+                                setEnd(patient.logradouro);
+                                setEndNum(patient.numero);
+                                setBairro(patient.bairro);
+                                setCep(patient.cep);
+                                setCidade(patient.cidade);
+                                setEstado(patient.estado)
+                                setId(patient.id);
                             }}>
                                 <Data>
                                     <Infos>Nome: </Infos>
-                                    <p>{doctor.firstName}</p>
+                                    <p>{patient.firstName}</p>
                                 </Data>
                                 <Data>
                                     <Infos>Sobrenome: </Infos>
-                                    <p>{doctor.lastName}</p>
+                                    <p>{patient.lastName}</p>
                                 </Data>
                                 <Data>
-                                    <Infos>CRM: </Infos>
-                                    <p>{doctor.crm}</p>
+                                    <Infos>Telefone: </Infos>
+                                    <p>{patient.telefone}</p>
                                 </Data>
                                 <Data>
                                     <Infos>E-mail: </Infos>
-                                    <p>{doctor.email}</p>
+                                    <p>{patient.email}</p>
                                 </Data>
                                 <Data>
-                                    <Infos>Especialidade:</Infos>
-                                    <p>{doctor.especialidade}</p>
+                                    <Infos>Cidade:</Infos>
+                                    <p>{patient.cidade}</p>
                                 </Data>
                             </DataD>
                         )
-                    })} */}
+                    })}
                 </Table>
                 <DivSButtonS>
                     <ButtonsS>
